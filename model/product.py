@@ -36,3 +36,10 @@ class Product:
 
     def __str__(self):
         return f"Name: {self.name} \nValue: {self.value}"
+
+    def to_dict(self):
+        return {
+            "identifier": self.identifier,
+            "name": self.name,
+            "value": float(self.value)
+        }

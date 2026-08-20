@@ -39,7 +39,7 @@ class Seller:
         if not email:
             raise ValueError("Email is missing")
         # Implement regex
-        if not r.search("^[^ ]+@[^ ]+[.][^ ]+$", email):
+        if not r.search(r"^[^ ]+@[^ ]+[.][^ ]+$", email):
             raise ValueError("Invalid Email")
 
         self._email = email

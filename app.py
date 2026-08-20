@@ -1,3 +1,4 @@
+from config.register import Register
 
 from model.order import Order
 from model.customer import Customer
@@ -14,7 +15,7 @@ def main():
     order.add_product(product)
     order.add_product(product2)
 
-    
+    Register.save(product2, "product")
 
     print(order.get_total())
 
