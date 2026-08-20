@@ -6,13 +6,15 @@ from model.seller import Seller
 
 def main():
     customer = Customer(1, "Carlos")
-    seller = Seller(1, "Joaquim", "carlos@gmail.com")
+    seller = Seller(1, "Joaquim", "cars@gmail.com")
     product = Product(1, "Mouse", 54.32)
     product2 = Product(2, "Teclado", 101.29)
 
     order = Order(1, seller.identifier, customer.identifier)
     order.add_product(product)
     order.add_product(product2)
+
+    
 
     print(order.get_total())
 

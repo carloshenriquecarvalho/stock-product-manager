@@ -1,3 +1,5 @@
+import re as r
+
 class Seller:
     def __init__(self, identifier, name, email):
         self.identifier = identifier
@@ -37,6 +39,9 @@ class Seller:
         if not email:
             raise ValueError("Email is missing")
         # Implement regex
+        if not r.search("^[^ ]+@[^ ]+[.][^ ]+$", email):
+            raise ValueError("Invalid Email")
+
         self._email = email
 
     @property
