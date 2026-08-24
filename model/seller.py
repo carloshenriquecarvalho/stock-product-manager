@@ -42,7 +42,6 @@ class Seller:
         # Implement regex
         if not r.search(r"^[^ ]+@[^ ]+[.][^ ]+$", email):
             raise ValueError("Invalid Email")
-
         self._email = email
 
     @property
@@ -68,11 +67,10 @@ class Seller:
             print("Order could not be saved")
         return
         
-
     def to_dict(self):
         return {
             "identifier": self.identifier,
             "name": self.name,
             "email": self.email,
-            "orders": [order.to_dict() for order in self.orders]
+            "orders": [order.to_dict() for order in self._orders]
         }

@@ -9,7 +9,7 @@ class Order:
 
     @property
     def identifier(self):
-        return self.identifier
+        return self._identifier
 
     @identifier.setter
     def identifier(self, identifier: int):
@@ -25,7 +25,7 @@ class Order:
     def customer_identifier(self, identifier: int):
         if not identifier:
             raise ValueError("identifier is missing")
-        self._identifier = identifier
+        self._customer_identifier = identifier
 
     def add_product(self, product):
         if not isinstance(product, Product):
@@ -47,8 +47,8 @@ class Order:
 
     def to_dict(self):
         return {
-            "identifier": self.identifier,
+            "identifier": self._identifier,
             "seller_identifier": self.seller_identifier,
             "customer_identifier": self.customer_identifier,
-            "products": [product.to_dict() for product in self.products]
+            "products": [product.to_dict() for product in self._products]
         }

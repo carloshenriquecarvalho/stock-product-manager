@@ -3,18 +3,24 @@ from model.product import Product
 from model.customer import Customer
 from model.seller import Seller
 from model.order import Order
+from pathlib import Path
  
 class Register:
     
     @classmethod
-    def save(cls, data, entity):
+    def save(cls, data, entity, directory="./data"):
+        directory = Path(directory)
+        file_path = directory / f"{entity}.json"
         try:
-            with open(f"./data/{entity}.json", "w", encoding="utf8") as file:
+            directory.mkdir(parents=True, exist_ok=True)
+
+            with file_path.open("w", encoding="utf8") as file:
                 json.dump(data.to_dict(), file, indent=4, ensure_ascii=False)
 
             print("File saved! ")
         except (TypeError, ValueError) as e:
             print(f"Serialization error: {e}")
+        return file_path
 
     def deserialize_data(entity):
         data = json.load(f"{entity}".json)
