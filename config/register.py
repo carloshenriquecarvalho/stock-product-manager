@@ -10,22 +10,63 @@ class Register:
     @classmethod
     def save(cls, data, entity, directory="./data"):
         directory = Path(directory)
+        directory.mkdir(parents=True, exist_ok=True)
+
         file_path = directory / f"{entity}.json"
+
         try:
-            directory.mkdir(parents=True, exist_ok=True)
+            records = cls._read_json(file_path)
 
-            with file_path.open("w", encoding="utf8") as file:
-                json.dump(data.to_dict(), file, indent=4, ensure_ascii=False)
+            if not isinstance(records, list):
+                raise TypeError("The JSON root must be a list")
 
-            print("File saved! ")
-        except (TypeError, ValueError) as e:
-            print(f"Serialization error: {e}")
-        return file_path
+            records.append(data.to_dict())
 
-    def deserialize_data(entity):
-        data = json.load(f"{entity}".json)
+            with file_path.open("w", encoding="utf-8") as file:
+                json.dump(
+                    records,
+                    file,
+                    indent=4,
+                    ensure_ascii=False
+                )
 
-        if entity == "product":
+            print("File saved!")
+            return file_path
+
+        except (TypeError, ValueError) as error:
+            print(f"Serialization error: {error}")
+            return None
+
+    @staticmethod
+    def _read_json(file_path):
+
+        if not file_path.exists():
+            return []
+        try:
+            with file_path.open("r", encoding="utf-8") as file:
+                records = json.load(file)
+
+            if isinstance(records, list):
+                return records
+
+            if isinstance(records, dict):
+                return [records]
+
+            raise ValueError(
+                "JSON content must be a list or dictionary"
+            )
+
+        except json.JSONDecodeError:
+            return []
+
+    def find(entity, directory="./data"):
+        directory = Path(directory)
+        file_path = directory / f"{entity}.json" 
+
+        with file_path.open("r", encoding="utf8") as file:
+            data = json.load(file)
+
+        if entity == "products":
             return [
                 Product(
                     item["identifier"],
@@ -35,7 +76,7 @@ class Register:
                 for item in data
             ]
 
-        if entity == "order":
+        if entity == "orders":
             return [
                 Order(
                     item["identifier"],
@@ -45,7 +86,7 @@ class Register:
                 for item in data
             ]
 
-        if entity == "customer":
+        if entity == "customers":
             return [
                 Customer(
                     item["identifier"],
@@ -54,7 +95,7 @@ class Register:
                 for item in data
             ]
 
-        if entity == "seller":
+        if entity == "sellers":
             return [
                 Seller(
                     item["identifier"],

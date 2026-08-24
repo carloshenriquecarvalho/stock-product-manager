@@ -1,25 +1,18 @@
+from model.product import Product
 from config.register import Register
 
-from model.order import Order
-from model.customer import Customer
-from model.product import Product
-from model.seller import Seller
-
 def main():
-    customer = Customer(1, "Carlos")
-    seller = Seller(1, "Joaquim", "cars@gmail.com")
-    product = Product(1, "Mouse", 54.32)
-    product2 = Product(2, "Teclado", 101.29)
+    product1 = Product(1,"Mouse", 56.98)
+    product2 = Product(2,"Teclado", 149.50)
 
-    order = Order(1, seller.identifier, customer.identifier)
-    order.add_product(product)
-    order.add_product(product2)
+    Register.save(data=product1, entity="products")
+    Register.save(data=product2, entity="products")
 
-    Register.save(product2, "product")
 
-    print(order.get_total())
+    response = Register.find("products")
 
-    print(order)
+    for i in response:
+        print(i)
 
 if __name__ == "__main__":
     main()

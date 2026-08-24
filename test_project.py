@@ -6,7 +6,6 @@ from model.seller import Seller
 
 import json
 
-
 def test_save_product(tmp_path):
     product = Product(1, "Mouse", 65.45)
     file_path = Register.save(
@@ -36,7 +35,6 @@ def test_save_seller(tmp_path):
         saved_seller = json.load(file)
 
     assert saved_seller == seller.to_dict()
-
 
 def test_save_customer(tmp_path):
     customer = Customer(1, "Carlos")
