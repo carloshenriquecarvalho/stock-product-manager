@@ -44,3 +44,11 @@ class Order:
     def __str__(self):
         for product in self._products:
             return f"{product}"
+
+    def to_dict(self):
+        return {
+            "identifier": self.identifier,
+            "seller_identifier": self.seller_identifier,
+            "customer_identifier": self.customer_identifier,
+            "products": [product.to_dict() for product in self.products]
+        }

@@ -29,12 +29,16 @@ class Customer:
 
     @property
     def orders(self):
-         return self._orders
+         return tuple(self._orders)
 
     def add_orders(self, order):
         if not isinstance(order, Order):
-              raise NotImplemented
+            raise NotImplemented("Order must be of the type Order")
         self._orders.append(order)
 
-
-    
+    def to_dict(self):
+        return {
+            "identifier": self.identifier,
+            "name": self.name,
+            "orders": [order.to_dict() for order in self.orders]
+        }   

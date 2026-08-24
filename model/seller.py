@@ -1,4 +1,5 @@
 import re as r
+from model.order import Order
 
 class Seller:
     def __init__(self, identifier, name, email):
@@ -53,3 +54,25 @@ class Seller:
         if value < 1:
             raise ValueError("Value must be more than 0")
         self._total += value
+
+    @property
+    def orders(self):
+        return tuple(self.orders)
+
+    @orders.setter
+    def orders(self, order):
+        if isinstance(order, Order):
+            self.orders.append(order)
+            print("Order saved successfully")
+        else:
+            print("Order could not be saved")
+        return
+        
+
+    def to_dict(self):
+        return {
+            "identifier": self.identifier,
+            "name": self.name,
+            "email": self.email,
+            "orders": [order.to_dict() for order in self.orders]
+        }

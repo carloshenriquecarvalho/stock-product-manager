@@ -16,7 +16,7 @@ class Register:
         except (TypeError, ValueError) as e:
             print(f"Serialization error: {e}")
 
-    def serialize_data(entity):
+    def deserialize_data(entity):
         data = json.load(f"{entity}".json)
 
         if entity == "product":
@@ -50,7 +50,7 @@ class Register:
 
         if entity == "seller":
             return [
-                Customer(
+                Seller(
                     item["identifier"],
                     item["name"]
                 )
